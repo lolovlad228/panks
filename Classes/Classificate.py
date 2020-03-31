@@ -3,6 +3,7 @@ import numpy as np
 from Classes.Interfase.IClassesification import IClassesificationType
 from math import fabs
 
+
 class ColorClassif(IClassesificationType):
 
     __low = None

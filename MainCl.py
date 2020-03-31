@@ -1,21 +1,27 @@
 import cv2
 from Classes import Classificate
 
-
 img_uri = "tuA-YNuPOsE.jpg"
 
 img = cv2.imread(img_uri)
-filter_red = Classificate.ColorClassif((50, 60, 185), (10, 255, 255))
+filter_red = Classificate.ColorClassif((0, 50, 150), (10, 255, 255))
+filter_blue = Classificate.ColorClassif((94, 80, 2), (126, 255, 255))
+filter_green = Classificate.ColorClassif((35, 150, 50), (75, 255, 255))
+filter_list = [filter_red, filter_blue, filter_green]
 
-cv2.imwrite('aprox.jpg', filter_red.img_approximation(img))
-
-#xy = filter_red.square(img)
-
-
-#for i in xy:
-#    print(i)
-#    img = cv2.circle(img, (i[0], i[1]), 100, (255, 255, 255), 2)
+list_center = []
 
 
-cv2.imwrite("now.jpg", img)
+def main_classificate(img):
+    for i in filter_list:
+        list_center.append(i.cycle(img))
+        list_center.append(i.square(img))
+        list_center.append(i.square_with_a_hole(img))
+    print(list_center)
+    for i in list_center:
+        for j in i:
+            img = cv2.circle(img, (j[0], j[1]), 3, (255, 255, 255), 2)
+    cv2.imwrite("now.jpg", img)
 
+
+main_classificate(img)

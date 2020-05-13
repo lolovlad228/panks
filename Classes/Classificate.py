@@ -34,14 +34,14 @@ class ColorClassif(IClassesificationType):
         cnt_list = []
         max_area = 0
         for cnt in contours:
-            approx = cv2.approxPolyDP(cnt, 0.02 * cv2.arcLength(cnt, True), True)
+            approx = cv2.approxPolyDP(cnt, 0.01 * cv2.arcLength(cnt, True), True)
             line_len = len(cnt)
             if line_len > 100 and len(approx) >= 8:
                 ellipse = cv2.fitEllipse(cnt)
                 max_area = line_len if line_len > max_area else max_area
-                cnt_list.append((int(ellipse[0][0]), int(ellipse[0][1]), line_len, len(approx)))
-        squ = list(filter(lambda x: x[3] >= 8 and x[2] == max_area, cnt_list))
-        return [[squ[0][0], squ[0][1], 'cycle']]
+                cnt_list.append((int(ellipse[0][0]), int(ellipse[0][1]), line_len, len(approx), approx))
+        squ = list(filter(lambda x: x[3] >= 8 and x[2] == max_area, cnt_list))[-1]
+        return [[squ[0], squ[1], 'cycle', squ[4]]]
 
     def square(self, img):
         '''contours = cv2.findContours(self.img_approximation(img), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[0]
@@ -68,7 +68,7 @@ class ColorClassif(IClassesificationType):
             x, y, w, h = cv2.boundingRect(cnt)
             #  print(len(approx), w * h / 100)
             if len(approx) == 4 and 170 >= w * h / 100 > 0.5:
-                cnt_list.append([int(x + w / 2), int(y + h / 2), 'square'])
+                cnt_list.append([int(x + w / 2), int(y + h / 2), 'square', approx])
         cnt_list.sort(key=lambda i: i[0] and i[1], reverse=False)
         linse_in_squ = []
         center_list = []
@@ -95,7 +95,7 @@ class ColorClassif(IClassesificationType):
             x, y, w, h = cv2.boundingRect(cnt)
             #  print(len(approx), w * h / 100)
             if len(approx) > 4 and 170 >= w * h / 100 > 0.5:
-                cnt_list.append([int(x + w / 2), int(y + h / 2), 'square_with_a_hole'])
+                cnt_list.append([int(x + w / 2), int(y + h / 2), 'square_with_a_hole', approx])
         cnt_list.sort(key=lambda i: i[0] and i[1], reverse=False)
         linse_in_squ = []
         center_list = []

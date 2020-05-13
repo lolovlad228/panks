@@ -2,7 +2,7 @@ import cv2
 from Classes import Classificate
 import numpy as np
 
-img_uri = "RBkvD8nyo-4.jpg"
+img_uri = "hTs8l_VDQ90.jpg"
 
 
 def nothing(x):
@@ -13,13 +13,9 @@ img = cv2.imread(img_uri)
 filter_red = Classificate.ColorClassif((164, 93, 121), (255, 255, 255))
 filter_blue = Classificate.ColorClassif((86, 132, 25), (162, 255, 255))
 filter_green = Classificate.ColorClassif((70, 93, 42), (95, 255, 255))
-filter_list = [filter_green, filter_red, filter_blue]
+filter_list = [filter_red]
 
 list_center = []
-
-print(filter_blue.square_with_a_hole(img))
-print(filter_blue.cycle(img))
-print(filter_blue.square(img))
 
 def test():
     cv2.namedWindow("Tracking")
@@ -63,7 +59,9 @@ def main_classificate(img):
     print(list_center)
     for i in list_center:
         for j in i:
-            img = cv2.circle(img, (j[0], j[1]), 3, (255, 255, 255), 2)
+            cv2.circle(img, (j[0], j[1]), 3, (255, 255, 255), 2)
+            cv2.drawContours(img, [j[3]], -1, (0, 0, 0), 4)
+            cv2.cv2.putText(img, j[2], (j[0] - 60, j[1] - 60), cv2.QT_FONT_NORMAL, 1, (30, 105, 210), 2)
     cv2.imwrite("now.jpg", img)
 
 main_classificate(img)

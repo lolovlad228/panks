@@ -59,7 +59,7 @@ def main_classificate(img):
     print(list_center)
     for i in list_center:
         for j in i:
-            cv2.circle(img, (j[0], j[1]), 3, (255, 255, 255), 2)
+            cv2.circle(img, (j[0], j[1]), 3, (255, 255, 255), 3)
             cv2.drawContours(img, [j[3]], -1, (0, 0, 0), 4)
             cv2.cv2.putText(img, j[2], (j[0] - 60, j[1] - 60), cv2.QT_FONT_NORMAL, 1, (30, 105, 210), 2)
     cv2.imwrite("now.jpg", img)

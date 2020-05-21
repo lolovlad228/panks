@@ -2,7 +2,7 @@ import cv2
 from Classes import Classificate
 import numpy as np
 
-img_uri = "hTs8l_VDQ90.jpg"
+img_uri = "20191203_190749.jpg"
 
 
 def nothing(x):
@@ -64,8 +64,8 @@ def main_classificate(img):
             cv2.cv2.putText(img, j[2], (j[0] - 60, j[1] - 60), cv2.QT_FONT_NORMAL, 1, (30, 105, 210), 2)
     cv2.imwrite("now.jpg", img)
 
-main_classificate(img)
-#  test()
+#  main_classificate(img)
+test()
 
 img = cv2.Canny(img, 100, 200)
 cv2.imwrite("canny.jpg", img)

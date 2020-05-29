@@ -10,10 +10,10 @@ def nothing(x):
 
 
 img = cv2.imread(img_uri)
-filter_red = Classificate.ColorClassif((164, 93, 121), (255, 255, 255))
-filter_blue = Classificate.ColorClassif((86, 132, 25), (162, 255, 255))
-filter_green = Classificate.ColorClassif((70, 93, 42), (95, 255, 255))
-filter_list = [filter_red]
+filter_red = Classificate.ColorClassif((164, 93, 121), (255, 255, 255), "red")
+filter_blue = Classificate.ColorClassif((86, 132, 25), (162, 255, 255), "blue")
+filter_green = Classificate.ColorClassif((70, 93, 42), (95, 255, 255), "green")
+filter_list = [filter_red, filter_blue, filter_green]
 
 list_center = []
 
@@ -57,13 +57,13 @@ def main_classificate(img):
         list_center.append(i.cycle(img))
         list_center.append(i.square(img))
         list_center.append(i.square_with_a_hole(img))
-    print(list_center)
     for i in list_center:
         for j in i:
             cv2.circle(img, (j[0], j[1]), 3, (255, 255, 255), 3)
             cv2.drawContours(img, [j[3]], -1, (0, 0, 0), 4)
             cv2.cv2.putText(img, j[2], (j[0] - 60, j[1] - 60), cv2.QT_FONT_NORMAL, 1, (30, 105, 210), 2)
-            cv2.cv2.putText(img, f"{j[0], j[1]}", (j[0] - 90, j[1] + 40), cv2.QT_FONT_NORMAL, 1, (36, 255, 0), 2)
+            print(f"x - {j[0]}, y - {j[1]}, type - {j[2]}\n")
+
     cv2.imwrite("now.jpg", img)
 
 

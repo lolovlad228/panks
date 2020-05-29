@@ -25,9 +25,10 @@ class ColorClassif(IClassesificationType):
         cv2.imwrite("img/close.jpg", closed)
         return closed
 
-    def __init__(self, low, high):
+    def __init__(self, low, high, color):
         self.__low = low
         self.__high = high
+        self.__color = color
 
     def cycle(self, img):
         contours = cv2.findContours(self.img_approximation(img), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[0]
@@ -41,7 +42,7 @@ class ColorClassif(IClassesificationType):
                 max_area = line_len if line_len > max_area else max_area
                 cnt_list.append((int(ellipse[0][0]), int(ellipse[0][1]), line_len, len(approx), approx))
         squ = list(filter(lambda x: x[3] >= 8 and x[2] == max_area, cnt_list))[-1]
-        return [[squ[0], squ[1], 'cycle', squ[4]]]
+        return [[squ[0], squ[1], f'cycle_{self.__color}', squ[4]]]
 
     def square(self, img):
         '''contours = cv2.findContours(self.img_approximation(img), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[0]
@@ -68,7 +69,7 @@ class ColorClassif(IClassesificationType):
             x, y, w, h = cv2.boundingRect(cnt)
             #  print(len(approx), w * h / 100)
             if len(approx) == 4 and 170 >= w * h / 100 > 0.5:
-                cnt_list.append([int(x + w / 2), int(y + h / 2), 'square', approx])
+                cnt_list.append([int(x + w / 2), int(y + h / 2), f'square_{self.__color}', approx])
         cnt_list.sort(key=lambda i: i[0] and i[1], reverse=False)
         linse_in_squ = []
         center_list = []
@@ -95,7 +96,7 @@ class ColorClassif(IClassesificationType):
             x, y, w, h = cv2.boundingRect(cnt)
             #  print(len(approx), w * h / 100)
             if len(approx) > 4 and 170 >= w * h / 100 > 0.5:
-                cnt_list.append([int(x + w / 2), int(y + h / 2), 'square_with_a_hole', approx])
+                cnt_list.append([int(x + w / 2), int(y + h / 2), f'square_with_a_hole_{self.__color}', approx])
         cnt_list.sort(key=lambda i: i[0] and i[1], reverse=False)
         linse_in_squ = []
         center_list = []

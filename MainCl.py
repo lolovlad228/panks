@@ -66,6 +66,7 @@ def main_classificate(img):
             cv2.cv2.putText(img, f"{j[0], j[1]}", (j[0] - 90, j[1] + 40), cv2.QT_FONT_NORMAL, 1, (36, 255, 0), 2)
     cv2.imwrite("now.jpg", img)
 
+
 main_classificate(img)
 #  test()
 

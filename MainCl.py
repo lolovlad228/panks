@@ -2,7 +2,7 @@ import cv2
 from Classes import Classificate
 import numpy as np
 
-img_uri = "20191203_190749.jpg"
+img_uri = "hTs8l_VDQ90.jpg"
 
 
 def nothing(x):
@@ -16,6 +16,7 @@ filter_green = Classificate.ColorClassif((70, 93, 42), (95, 255, 255))
 filter_list = [filter_red]
 
 list_center = []
+
 
 def test():
     cv2.namedWindow("Tracking")
@@ -62,10 +63,11 @@ def main_classificate(img):
             cv2.circle(img, (j[0], j[1]), 3, (255, 255, 255), 3)
             cv2.drawContours(img, [j[3]], -1, (0, 0, 0), 4)
             cv2.cv2.putText(img, j[2], (j[0] - 60, j[1] - 60), cv2.QT_FONT_NORMAL, 1, (30, 105, 210), 2)
+            cv2.cv2.putText(img, f"{j[0], j[1]}", (j[0] - 90, j[1] + 40), cv2.QT_FONT_NORMAL, 1, (36, 255, 0), 2)
     cv2.imwrite("now.jpg", img)
 
-#  main_classificate(img)
-test()
+main_classificate(img)
+#  test()
 
 img = cv2.Canny(img, 100, 200)
 cv2.imwrite("canny.jpg", img)
